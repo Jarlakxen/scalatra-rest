@@ -30,7 +30,7 @@ If we try to access to the User resource specifying some field to query:
 
 localhost:8080/resources/user/?name=Admin&enabled=true
 
-In this case the paramsOf[User] would return
+In this case the paramsOf[User] returns:
 
 Map("name" -> "Admin", "enabled" -> true)
 
