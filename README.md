@@ -44,3 +44,14 @@ This is very useful when you work with some DB frameworks like [Salat](https://g
 
     }
 
+#### @NotQueryable
+
+This annotation can be used to make some field not queryable:
+
+    case class User(id: ObjectId, name: String, @NotQueryable password: String, enabled: Boolean)
+
+for localhost:8080/resources/user/?password=12345 the `paramsOf[User]` returns:
+
+    Map()
+
+This logic can be avoid by using `paramsOf[User]( ignoreNotQueryable = true )`
