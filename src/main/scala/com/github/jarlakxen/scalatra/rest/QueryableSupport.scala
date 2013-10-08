@@ -35,7 +35,7 @@ trait QueryableSupport {
       } )
   }
 
-  private def extract[T]( ignoreNotQueryable : Boolean, ttag : TypeTag[T] ) : Seq[CaseClassField] = {
+  private def extract[T]( ignoreNotQueryable : Boolean, ttag : TypeTag[T] ) : Seq[CaseClassField] = this.synchronized {
     val cto = ttag.tpe.member( nme.CONSTRUCTOR ).asMethod
     cto.paramss.head.collect{
       case p : TermSymbol if ignoreNotQueryable || !p.annotations.exists( _.tpe =:= typeOf[NotQueryable] ) => p
