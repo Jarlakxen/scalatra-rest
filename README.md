@@ -30,9 +30,9 @@ If we try to access to the User resource specifying some field to query:
 
 localhost:8080/resources/user/?name=Admin&enabled=true
 
-In this case the paramsOf[User] returns:
+In this case the `paramsOf[User]` returns:
 
-Map("name" -> "Admin", "enabled" -> true)
+    Map("name" -> "Admin", "enabled" -> true)
 
 This is very useful when you work with some DB frameworks like [Salat](https://github.com/novus/salat/):
 
