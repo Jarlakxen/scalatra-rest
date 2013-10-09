@@ -55,3 +55,24 @@ for localhost:8080/resources/user/?password=12345 the `paramsOf[User]` returns:
     Map()
 
 This logic can be avoid by using `paramsOf[User]( ignoreNotQueryable = true )`
+
+## CacheControlSupport
+
+This trait that add the capability to easy add the cache control headers to the response. The traits supports:
+
+    get("/"){
+        cacheControl = NoCache
+        ...
+    }
+
+    import com.github.nscala_time.time.Imports._
+    get("/"){
+        cacheControl = MaxAge(20.minutes)
+        ...
+    }
+
+    import com.github.nscala_time.time.Imports._
+    get("/"){
+        cacheControl = Expires(DateTime.now + 2.hours)
+        ...
+    }
