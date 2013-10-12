@@ -76,3 +76,9 @@ This trait that add the capability to easy add the cache control headers to the 
         cacheControl = Expires(DateTime.now + 2.hours)
         ...
     }
+
+    import com.github.nscala_time.time.Imports._
+    get("/"){
+        .....
+        Ok( value, MaxAge(20.minutes))
+    }
