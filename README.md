@@ -11,7 +11,7 @@ Example:
 
     case class User(id: ObjectId, name: String, password: String, enabled: Boolean)
 
-    class UserServlet ScalatraServlet with QueryableSupport {
+    class UserServlet extends ScalatraServlet with QueryableSupport {
 
         ...
 
@@ -55,6 +55,31 @@ for localhost:8080/resources/user/?password=12345 the `paramsOf[User]` returns:
     Map()
 
 This logic can be avoid by using `paramsOf[User]( ignoreNotQueryable = true )`
+
+## QueryableViewSupport
+
+This trait add the capability to filter the fields of the output json. For this, the trait looks for a "fields" query parameters that specifies witch fields of the json object that must be returned.
+
+Example:
+
+    import com.github.jarlakxen.scalatra.rest.queryable.jackson.QueryableViewSupport
+    
+    case class User( id : String, name : String, password : String )
+
+    class UserServlet extends ScalatraServlet with JacksonJsonSupport with QueryableViewSupport {
+
+        ...
+
+        get("/"){
+            contentType = formats( "json" )
+            User( "1", "test", "1233456" )
+        }
+
+        ...
+
+    }
+
+for localhost:8080/resources/user/?fields=id,name this will return {id:1, name:test}
 
 ## CacheControlSupport
 

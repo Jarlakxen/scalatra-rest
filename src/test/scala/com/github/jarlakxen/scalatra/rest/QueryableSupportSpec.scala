@@ -11,7 +11,7 @@ class QueryableSupportSpec extends Specification {
 
   case class User( name : String, email : String, @NotQueryable password : String, enabled : Boolean )
 
-  "Queryable trait" should {
+  "QueryableSupport trait" should {
 
     val base = new ScalatraServlet with QueryableSupport {
       override def params( implicit request : HttpServletRequest ) = new ScalatraParams( Map( "enabled" -> Seq( "false" ), "password" -> Seq( "12345" ), "fake" -> Seq( "fake" ) ) )

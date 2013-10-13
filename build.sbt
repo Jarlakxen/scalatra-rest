@@ -33,6 +33,7 @@ libraryDependencies ++= Seq(
   "com.github.nscala-time" %% "nscala-time" % "0.6.0" withSources(),
   "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" withSources() withJavadoc(),
   "org.specs2" %% "specs2" % "2.2.3" % "test" withSources() withJavadoc(),
+  "org.scalatra" %% "scalatra-specs2" % "2.2.1" % "test" withSources() withJavadoc(),
   "junit" % "junit" % "4.8.1" % "test"
 )
 
