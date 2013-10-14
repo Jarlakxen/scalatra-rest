@@ -1,4 +1,4 @@
-package com.github.jarlakxen.scalatra.rest
+package com.github.jarlakxen.scalatra.rest.queryable
 
 import scala.reflect.runtime.universe._
 

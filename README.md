@@ -44,6 +44,8 @@ This is very useful when you work with some DB frameworks like [Salat](https://g
 
     }
 
+> Note: The trait only support conversion of primitive types ( Int, Long, Dloat, Double and Boolean )
+
 #### @NotQueryable
 
 This annotation can be used to make some field not queryable:

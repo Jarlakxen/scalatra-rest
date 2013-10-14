@@ -1,10 +1,10 @@
-package com.github.jarlakxen.scalatra.rest
+package com.github.jarlakxen.scalatra.rest.queryable
 
 import org.junit.runner.RunWith
-import org.specs2.runner.JUnitRunner
 import org.specs2.mutable._
-import javax.servlet.http.HttpServletRequest
+import org.specs2.runner.JUnitRunner
 import org.scalatra.{ ScalatraServlet, ScalatraParams }
+import javax.servlet.http.HttpServletRequest
 
 @RunWith( classOf[JUnitRunner] )
 class QueryableSupportSpec extends Specification {

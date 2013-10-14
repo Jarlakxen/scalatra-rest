@@ -1,10 +1,9 @@
-package com.github.jarlakxen.scalatra.rest
+package com.github.jarlakxen.scalatra.rest.queryable
 
 import org.scalatra.ScalatraBase
-import scala.reflect.ClassTag
 import scala.reflect.runtime.universe._
-import java.lang.reflect.ParameterizedType
 import java.util.concurrent.ConcurrentHashMap
+import scala.reflect.runtime.universe
 
 trait QueryableSupport {
   self : ScalatraBase =>
