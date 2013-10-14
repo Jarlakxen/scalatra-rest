@@ -1,19 +1,9 @@
-package com.github.jarlakxen.scalatra.rest
+package com.github.jarlakxen.scalatra.rest.json
 
 import scala.collection._
 import scala.collection.mutable.ListBuffer
 
-object ViewModule {
-
-  def rulesOf[Target <: AnyRef, UserType <: AnyRef]( definition : MutableSecurityModule[Target, UserType] => Unit ) = {
-    val module = new Object with MutableSecurityModule[Target, UserType]
-    definition( module )
-    module.rules
-  }
-
-}
-
-trait MutableSecurityModule[Target <: AnyRef, UserType <: AnyRef] {
+trait ViewModule[Target <: AnyRef, UserType <: AnyRef] {
 
   import mutable.ListBuffer
 

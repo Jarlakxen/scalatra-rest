@@ -5,7 +5,7 @@ scalatra-rest its a simple library with useful tools for develop rest apis with 
 
 ## QueryableSupport
 
-This is a simple trait that add the capability to extract and convert the query parameters based on an case class fields.
+This is a simple trait that adds the capability to extract and convert the query parameters based on every case class fields.
 
 Example:
 
@@ -44,11 +44,11 @@ This is very useful when you work with some DB frameworks like [Salat](https://g
 
     }
 
-> Note: The trait only support conversion of primitive types ( Int, Long, Dloat, Double and Boolean )
+> Note: The trait only supports the conversion of primitive types ( Int, Long, Dloat, Double and Boolean ). If the target case class contains a complex type like Set, Maps or Optional, the type of this fields would remain as String.
 
 #### @NotQueryable
 
-This annotation can be used to make some field not queryable:
+This annotation can be used to mark some fields as not queryable:
 
     case class User(id: ObjectId, name: String, @NotQueryable password: String, enabled: Boolean)
 
@@ -56,11 +56,11 @@ for localhost:8080/resources/user/?password=12345 the `paramsOf[User]` returns:
 
     Map()
 
-This logic can be avoid by using `paramsOf[User]( ignoreNotQueryable = true )`
+This logic can be avoided by using `paramsOf[User]( ignoreNotQueryable = true )`
 
 ## QueryableViewSupport
 
-This trait add the capability to filter the fields of the output json. For this, the trait looks for a "fields" query parameters that specifies witch fields of the json object that must be returned.
+This trait adds the capability to filter the fields of the output json. For this, the trait looks for a "fields" query parameters that specifies witch fields of the json object that must be returned.
 
 Example:
 
@@ -85,7 +85,7 @@ for localhost:8080/resources/user/?fields=id,name this will return {id:1, name:t
 
 ## CacheControlSupport
 
-This trait that add the capability to easy add the cache control headers to the response. The traits supports:
+This trait adds the capability to easy add the cache control headers to the response. The traits supports:
 
     get("/"){
         cacheControl = NoCache
@@ -109,3 +109,40 @@ This trait that add the capability to easy add the cache control headers to the 
         .....
         Ok( value, MaxAge(20.minutes))
     }
+
+
+## JsonViewSupport
+
+This trait adds the capability to to filter the output json based on validations rules. This rules are written with a DSL style, and take as parameters the instance of the output object and the current user. This is useful when you need to hide fields or object depending of the privileges of the user.
+
+Example:
+
+    case class User(id: ObjectId, name: String, password: String, enabled: Boolean)
+
+    class UserServlet extends ScalatraServlet with extends ScalatraServlet with ScentrySupport[User] with JacksonJsonSupport with jackson.JsonViewSupport[User, User]  {
+
+        ...
+
+        override val definition : ViewModule[Post, User] => Unit = { definition =>
+            import definition._;
+          `object` notIf { implicit params => isNotLogged && !target.enabled }
+          "password" onlyIf { implicit params => user.id == target.id }
+        }
+
+        get("/"){
+            contentType = formats( "json" )
+            List(User("1", "Test", "123456789", false))
+        }
+
+    }
+
+> Note: The JsonViewSupport trait depends on having the ScentrySupport trait
+
+In this example when you acceso the localhost:8080/resources/user/ you can get:
+
++ If you are loggedin ( the user method of ScentrySupport return an instance ) and you are the user "Test" you get: [{id:"1", name:"Test", password:"123456789", enabled: false}] 
+
++ If you are loggedin and you are not the user "Test" you get: [{id:"1", name:"Test", enabled: false}] 
+
++ If you are not loggedin you get: [] 
+

@@ -1,4 +1,4 @@
-package com.madhouse.web.rest.tools
+package com.github.jarlakxen.scalatra.rest.json
 
 import scala.util.DynamicVariable
 import org.json4s._
@@ -7,14 +7,17 @@ import org.json4s.JsonDSL._
 import org.scalatra.ScalatraBase
 import org.scalatra.auth.ScentrySupport
 import org.scalatra.json.JsonSupport
-import com.github.jarlakxen.scalatra.rest.{ MutableSecurityModule, ViewModule, RuleParameters }
 
-trait ViewFilter[Target <: AnyRef, UserType <: AnyRef] {
-  self : ScalatraBase with ScentrySupport[UserType] with JsonSupport[Target] =>
+trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] extends ScalatraBase with JsonSupport[JsonType] {
+  self : ScentrySupport[UserType] =>
 
-  val definition : MutableSecurityModule[Target, UserType] => Unit
+  val definition : ViewModule[Target, UserType] => Unit
 
-  lazy val rules = ViewModule.rulesOf( definition )
+  lazy val rules = {
+    val module = new Object with ViewModule[Target, UserType]
+    definition( module )
+    module.rules
+  }
 
   private val resultCache = new DynamicVariable[Any]( null )
 
@@ -38,25 +41,14 @@ trait ViewFilter[Target <: AnyRef, UserType <: AnyRef] {
 
     resultCache.value = result
 
-    renderResult( result )
+    super.renderResponse( result )
 
-  }
-
-  private def renderResult( actionResult : Any ) {
-    if ( contentType == null )
-      contentTypeInferrer.lift( actionResult ) foreach {
-        contentType = _
-      }
-
-    renderResponseBody( actionResult )
   }
 
   protected override def transformResponseBody( _body : JValue ) : JValue = {
-
-    val body = self.transformResponseBody( _body );
+    val body = super.transformResponseBody( _body );
 
     val result = resultCache.value
-
     if ( result == null ) {
       return body
     }
@@ -78,7 +70,24 @@ trait ViewFilter[Target <: AnyRef, UserType <: AnyRef] {
 
       body removeField { field => fieldsToRemove contains ( field._1 ) }
     }
-
   }
-
 }
+
+package jackson {
+  import com.github.jarlakxen.scalatra.rest.json.{ JsonViewSupport => BaseJsonViewSupport }
+  import org.json4s.JValue
+
+  trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef] extends BaseJsonViewSupport[Target, UserType, JValue] {
+    self : ScentrySupport[UserType] =>
+  }
+}
+
+package native {
+  import com.github.jarlakxen.scalatra.rest.json.{ JsonViewSupport => BaseJsonViewSupport }
+  import scala.text.Document
+
+  trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef] extends BaseJsonViewSupport[Target, UserType, Document] {
+    self : ScentrySupport[UserType] =>
+  }
+}
+
