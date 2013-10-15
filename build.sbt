@@ -4,11 +4,13 @@ name := "scalatra-rest"
 
 version := "1.0-SNAPSHOT"
 
-publishMavenStyle := true
-
 crossScalaVersions := Seq("2.9.2", "2.10.2")
 
 crossVersion := CrossVersion.full
+
+publishMavenStyle := true
+
+publishArtifact in Test := false
 
 EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
 
