@@ -1,3 +1,4 @@
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.2")
 
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.3.0")
 

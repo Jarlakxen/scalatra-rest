@@ -29,12 +29,12 @@ libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra-json" % "2.2.1" withSources(),
   "org.json4s" %% "json4s-jackson" % "3.2.5" withSources(),
   "org.json4s" %% "json4s-ext" % "3.2.5" withSources(),
-  "ch.qos.logback" % "logback-classic" % "1.0.9" % "runtime",
+  "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
   "com.github.nscala-time" %% "nscala-time" % "0.6.0" withSources(),
   "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" withSources() withJavadoc(),
   "org.specs2" %% "specs2" % "2.2.3" % "test" withSources() withJavadoc(),
   "org.scalatra" %% "scalatra-specs2" % "2.2.1" % "test" withSources() withJavadoc(),
-  "junit" % "junit" % "4.8.1" % "test"
+  "junit" % "junit" % "4.11" % "test"
 )
 
 pomExtra := (
