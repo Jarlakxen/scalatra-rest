@@ -1,4 +1,4 @@
-organization := "com.github.jarlakxen"
+organization := "com.github.jarlakxen.scalatra"
 
 name := "scalatra-rest"
 
