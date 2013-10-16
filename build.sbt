@@ -4,7 +4,7 @@ organization := "com.github.jarlakxen"
 
 name := "scalatra-rest"
 
-version := "1.0-SNAPSHOT"
+version := "1.0"
 
 crossScalaVersions := Seq("2.9.3", "2.10.3")
 
