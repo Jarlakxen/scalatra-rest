@@ -1,3 +1,5 @@
+import sbtrelease.ReleasePlugin._
+
 organization := "com.github.jarlakxen.scalatra"
 
 name := "scalatra-rest"
@@ -22,6 +24,8 @@ scalacOptions <++= scalaVersion map { v =>
   else
     Seq("-unchecked", "-deprecation")
 }
+
+seq(releaseSettings: _*)
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % "2.10.0"  withSources() withJavadoc(),
