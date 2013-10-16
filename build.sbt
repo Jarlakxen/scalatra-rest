@@ -18,6 +18,8 @@ EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
 
 EclipseKeys.withSource := true
 
+ivyLoggingLevel := UpdateLogging.Full
+
 scalacOptions <++= scalaVersion map { v =>
   if (v.startsWith("2.10"))
     Seq("-unchecked", "-deprecation", "-feature", "-language:implicitConversions", "-language:postfixOps", "-language:existentials" )
@@ -64,6 +66,8 @@ pomExtra := (
     </developer>
   </developers>
 )
+
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 
 publishTo <<= version { v =>
   val nexus = "http://oss.sonatype.org/"
