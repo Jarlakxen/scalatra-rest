@@ -159,3 +159,6 @@ In this example when you acceso the localhost:8080/resources/user/ you can get:
 
 + If you are not loggedin you get: [] 
 
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Jarlakxen/scalatra-rest/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
