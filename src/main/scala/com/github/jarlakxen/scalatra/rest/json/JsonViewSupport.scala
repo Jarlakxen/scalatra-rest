@@ -21,7 +21,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
 
   private val resultCache = new DynamicVariable[Any]( null )
 
-  protected override def renderResponse( actionResult : Any ) {
+  protected override def renderResponseBody( actionResult : Any ) {
 
     val objectRules = rules._1;
     var result = actionResult
@@ -41,7 +41,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
 
     resultCache.value = result
 
-    super.renderResponse( result )
+    super.renderResponseBody( result )
 
   }
 

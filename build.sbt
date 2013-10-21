@@ -6,9 +6,9 @@ name := "scalatra-rest"
 
 version := "1.0"
 
-crossScalaVersions := Seq("2.10.2", "2.10.3")
+crossScalaVersions := Seq("2.10.2")
 
-crossVersion := CrossVersion.full
+scalaVersion <<= (crossScalaVersions) { versions => versions.head }
 
 publishMavenStyle := true
 
@@ -48,24 +48,24 @@ libraryDependencies <++= (scalaVersion) { (version) =>
 pomExtra := (
   <url>https://github.com/Jarlakxen/scalatra-rest</url>
   <licenses>
-  <license>
-  <name>GPL v2</name>
+    <license>
+      <name>GPL v2</name>
       <url>https://github.com/Jarlakxen/scalatra-rest/blob/master/LICENSE</url>
       <distribution>repo</distribution>
-      </license>
-      </licenses>
-      <scm>
-      <url>git@github.com:Jarlakxen/scalatra-rest.git</url>
-      <connection>scm:git:git@github.com:Jarlakxen/scalatra-rest.git</connection>
-      </scm>
-      <developers>
-      <developer>
+    </license>
+  </licenses>
+  <scm>
+  <url>git@github.com:Jarlakxen/scalatra-rest.git</url>
+  <connection>scm:git:git@github.com:Jarlakxen/scalatra-rest.git</connection>
+  </scm>
+  <developers>
+    <developer>
       <id>Jarlakxen</id>
       <name>Facundo Viale</name>
       <url>https://github.com/Jarlakxen/scalatra-rest</url>
-      </developer>
-      </developers>
-      )
+    </developer>
+  </developers>
+)
 
 credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 
