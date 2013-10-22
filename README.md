@@ -6,9 +6,12 @@ scalatra-rest its a simple library with useful tools for develop rest apis with 
 
 Stable [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/github/jarlakxen/)
 
-    "com.github.jarlakxen" %% "scalatra-rest" % "1.1"
+    "com.github.jarlakxen" %% "scalatra-rest" % "1.2"
 
 ### Changelog
+
+1.2
+- Fix bug of JsonViewSupport when the response is an ActionResult
 
 1.1
 - Fix scala release version

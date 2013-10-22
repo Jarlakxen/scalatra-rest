@@ -7,6 +7,7 @@ import org.json4s.JsonDSL._
 import org.scalatra.ScalatraBase
 import org.scalatra.auth.ScentrySupport
 import org.scalatra.json.JsonSupport
+import org.scalatra.ActionResult
 
 trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] extends ScalatraBase with JsonSupport[JsonType] {
   self : ScentrySupport[UserType] =>
@@ -21,10 +22,14 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
 
   private val resultCache = new DynamicVariable[Any]( null )
 
-  protected override def renderResponseBody( actionResult : Any ) {
+  protected override def renderResponseBody( response : Any ) {
 
     val objectRules = rules._1;
-    var result = actionResult
+
+    var result = response match {
+      case actionResult : ActionResult => actionResult.body
+      case value => value
+    }
 
     if ( result.isInstanceOf[Traversable[Target]] ) {
 
