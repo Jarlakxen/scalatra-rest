@@ -10,6 +10,9 @@ Stable [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com
 
 ### Changelog
 
+1.3
+- Fix build dependancies
+
 1.2
 - Fix bug of JsonViewSupport when the response is an ActionResult
 

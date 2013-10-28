@@ -4,7 +4,7 @@ organization := "com.github.jarlakxen"
 
 name := "scalatra-rest"
 
-version := "1.2"
+version := "1.3"
 
 crossScalaVersions := Seq("2.10.2")
 
@@ -29,18 +29,18 @@ seq(releaseSettings: _*)
 
 libraryDependencies <++= (scalaVersion) { (version) =>
   Seq(
-    "org.scala-lang" % "scala-reflect" % "2.10.0"  withSources() withJavadoc(),
-    "org.scalatra" %% "scalatra" % "2.2.1" withSources() withJavadoc(),
-    "org.scalatra" %% "scalatra-auth" % "2.2.1" withSources() withJavadoc(),
-    "org.scalatra" %% "scalatra-scalate" % "2.2.1" withSources() withJavadoc(),
-    "org.scalatra" %% "scalatra-json" % "2.2.1" withSources(),
-    "org.json4s" %% "json4s-jackson" % "3.2.5" withSources(),
-    "org.json4s" %% "json4s-ext" % "3.2.5" withSources(),
+    "org.scala-lang" % "scala-reflect" % "2.10.0",
+    "org.scalatra" %% "scalatra" % "2.2.1",
+    "org.scalatra" %% "scalatra-auth" % "2.2.1",
+    "org.scalatra" %% "scalatra-scalate" % "2.2.1",
+    "org.scalatra" %% "scalatra-json" % "2.2.1",
+    "org.json4s" %% "json4s-jackson" % "3.2.5",
+    "org.json4s" %% "json4s-ext" % "3.2.5",
     "ch.qos.logback" % "logback-classic" % "1.0.13" % "runtime",
-    "com.github.nscala-time" %% "nscala-time" % "0.6.0" withSources(),
-    "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided" withSources() withJavadoc(),
-    "org.specs2" %% "specs2" % "2.2.3" % "test" withSources() withJavadoc(),
-    "org.scalatra" %% "scalatra-specs2" % "2.2.1" % "test" withSources() withJavadoc(),
+    "com.github.nscala-time" %% "nscala-time" % "0.6.0",
+    "javax.servlet" % "javax.servlet-api" % "3.0.1" % "provided",
+    "org.specs2" %% "specs2" % "2.2.3" % "test",
+    "org.scalatra" %% "scalatra-specs2" % "2.2.1" % "test",
     "junit" % "junit" % "4.11" % "test"
     )
 }
