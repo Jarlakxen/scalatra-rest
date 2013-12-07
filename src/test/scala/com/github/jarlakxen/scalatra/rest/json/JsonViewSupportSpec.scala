@@ -25,12 +25,12 @@ class JsonViewSupportSpec extends MutableScalatraSpec {
     override val definition : ViewModule[Post, User] => Unit = { definition =>
       import definition._;
 
+      moduleOf[Post]
+
       `object` notIf { implicit params => isNotLogged && target.hidden }
 
       "creationDate" onlyIf { implicit params => isLogged }
     }
-
-    override val targetClass = classOf[Post]
 
     implicit protected override def user( implicit request : HttpServletRequest ) = fromSession( "1" )
     protected val scentryConfig = ( new ScentryConfig {} ).asInstanceOf[ScentryConfiguration]

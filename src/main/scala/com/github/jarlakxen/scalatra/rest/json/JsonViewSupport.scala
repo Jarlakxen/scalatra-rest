@@ -15,13 +15,13 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
 
   val definition : ViewModule[Target, UserType] => Unit
 
-  val targetClass : Class[Target]
-
-  lazy val rules = {
+  lazy val module = {
     val module = new Object with ViewModule[Target, UserType]
     definition( module )
-    module.rules
+    module
   }
+
+  lazy val rules = module.rules
 
   private val resultCache = new DynamicVariable[Any]( null )
 
@@ -34,12 +34,12 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
       case value => value
     }
 
-    if ( result.isInstanceOf[Traversable[Target]] ) {
+    if ( module.targetTraversableClass.isInstance( result ) ) {
 
       // If the result is an array remove the elements that doesn't match
       result = result.asInstanceOf[Traversable[Target]].filter( v => !objectRules.exists( rule => rule.condition( RuleParameters( v, user ) ) ) )
 
-    } else if ( targetClass.isInstance( result ) ) {
+    } else if ( module.targetClass.isInstance( result ) ) {
 
       // if the result is a single object , check the rules
       if ( objectRules.exists( _.condition( RuleParameters( result.asInstanceOf[Target], user ) ) ) ) {
@@ -57,7 +57,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
     val body = super.transformResponseBody( _body );
 
     val result = resultCache.value
-    if ( result == null || !targetClass.isInstance( result ) ) {
+    if ( result == null || !( module.targetClass.isInstance( result ) || module.targetTraversableClass.isInstance( result ) ) ) {
       return body
     }
 

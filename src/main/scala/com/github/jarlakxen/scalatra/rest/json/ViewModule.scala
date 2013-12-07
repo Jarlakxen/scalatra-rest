@@ -2,6 +2,7 @@ package com.github.jarlakxen.scalatra.rest.json
 
 import scala.collection._
 import scala.collection.mutable.ListBuffer
+import scala.reflect.ClassTag
 
 trait ViewModule[Target <: AnyRef, UserType <: AnyRef] {
 
@@ -9,6 +10,14 @@ trait ViewModule[Target <: AnyRef, UserType <: AnyRef] {
 
   @volatile protected[this] var _objectRules = ListBuffer.empty[ViewRule[Target, UserType]]
   @volatile protected[this] var _fieldsRules = ListBuffer.empty[ViewRule[Target, UserType]]
+
+  var targetClass : Class[_] = _
+  var targetTraversableClass : Class[_] = _
+
+  def moduleOf[T : ClassTag] {
+    this.targetClass = implicitly[ClassTag[T]].runtimeClass
+    this.targetTraversableClass = implicitly[ClassTag[Traversable[T]]].runtimeClass
+  }
 
   implicit def String2Rule( fieldName : String ) = ViewRuleBuilder( _fieldsRules, fieldName )
 

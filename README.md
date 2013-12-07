@@ -151,11 +151,12 @@ Example:
 
         override val definition : ViewModule[Post, User] => Unit = { definition =>
             import definition._;
+
+            moduleOf[Post]  // This is really important
+
           `object` notIf { implicit params => isNotLogged && !target.enabled }
           "password" onlyIf { implicit params => user.id == target.id }
         }
-
-        override val targetClass = classOf[Post]
 
         get("/"){
             contentType = formats( "json" )
