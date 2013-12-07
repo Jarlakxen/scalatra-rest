@@ -60,12 +60,18 @@ class JsonViewSupportSpec extends MutableScalatraSpec {
       List( Post( "1", "test", "Hello World!", "1/1/2013", true ) )
     }
 
+    get( "/OtherType" ){
+      contentType = formats( "json" )
+      List( "Value1", "Value2" )
+    }
+
   }
 
   addServlet( new JsonViewServlet( true ), "/Logged/*" )
   addServlet( new JsonViewServlet( false ), "/Unlogged/*" )
 
   "JsonViewServlet" should {
+
     "return the full object when is logged" in {
       get( "/Logged/Default" ) {
         status must_== 200
@@ -107,6 +113,13 @@ class JsonViewSupportSpec extends MutableScalatraSpec {
       get( "/Unlogged/ListWithHiddenObjects" ) {
         status must_== 200
         body must_== "[]"
+      }
+    }
+
+    "return other type of object" in {
+      get( "/Unlogged/OtherType" ) {
+        status must_== 200
+        body must_== "[\"Value1\",\"Value2\"]"
       }
     }
 

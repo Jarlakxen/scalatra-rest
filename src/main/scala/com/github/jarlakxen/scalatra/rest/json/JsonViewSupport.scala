@@ -34,7 +34,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
       case value => value
     }
 
-    if ( module.targetTraversableClass.isInstance( result ) ) {
+    if ( isTraversableTargetType( result ) ) {
 
       // If the result is an array remove the elements that doesn't match
       result = result.asInstanceOf[Traversable[Target]].filter( v => !objectRules.exists( rule => rule.condition( RuleParameters( v, user ) ) ) )
@@ -57,7 +57,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
     val body = super.transformResponseBody( _body );
 
     val result = resultCache.value
-    if ( result == null || !( module.targetClass.isInstance( result ) || module.targetTraversableClass.isInstance( result ) ) ) {
+    if ( result == null || !( module.targetClass.isInstance( result ) || isTraversableTargetType( result ) ) ) {
       return body
     }
 
@@ -78,6 +78,11 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
 
       body removeField { field => fieldsToRemove contains ( field._1 ) }
     }
+  }
+
+  private def isTraversableTargetType( result : Any ) = result match {
+    case t : Traversable[_] if !t.isEmpty && module.targetClass.isInstance( t.head ) => true
+    case _ => false
   }
 }
 

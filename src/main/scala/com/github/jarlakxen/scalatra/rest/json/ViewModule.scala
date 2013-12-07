@@ -12,11 +12,9 @@ trait ViewModule[Target <: AnyRef, UserType <: AnyRef] {
   @volatile protected[this] var _fieldsRules = ListBuffer.empty[ViewRule[Target, UserType]]
 
   var targetClass : Class[_] = _
-  var targetTraversableClass : Class[_] = _
 
   def moduleOf[T : ClassTag] {
     this.targetClass = implicitly[ClassTag[T]].runtimeClass
-    this.targetTraversableClass = implicitly[ClassTag[Traversable[T]]].runtimeClass
   }
 
   implicit def String2Rule( fieldName : String ) = ViewRuleBuilder( _fieldsRules, fieldName )
