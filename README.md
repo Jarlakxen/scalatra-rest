@@ -10,6 +10,9 @@ Stable [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com
 
 ### Changelog
 
+1.4
+- Fix type checking
+
 1.3
 - Fix build dependancies
 

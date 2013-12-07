@@ -8,11 +8,14 @@ import org.scalatra.ScalatraBase
 import org.scalatra.auth.ScentrySupport
 import org.scalatra.json.JsonSupport
 import org.scalatra.ActionResult
+import scala.reflect.ClassTag
 
 trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] extends ScalatraBase with JsonSupport[JsonType] {
   self : ScentrySupport[UserType] =>
 
   val definition : ViewModule[Target, UserType] => Unit
+
+  val targetClass : Class[Target]
 
   lazy val rules = {
     val module = new Object with ViewModule[Target, UserType]
@@ -36,7 +39,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
       // If the result is an array remove the elements that doesn't match
       result = result.asInstanceOf[Traversable[Target]].filter( v => !objectRules.exists( rule => rule.condition( RuleParameters( v, user ) ) ) )
 
-    } else {
+    } else if ( targetClass.isInstance( result ) ) {
 
       // if the result is a single object , check the rules
       if ( objectRules.exists( _.condition( RuleParameters( result.asInstanceOf[Target], user ) ) ) ) {
@@ -54,7 +57,7 @@ trait JsonViewSupport[Target <: AnyRef, UserType <: AnyRef, JsonType <: AnyRef] 
     val body = super.transformResponseBody( _body );
 
     val result = resultCache.value
-    if ( result == null ) {
+    if ( result == null || !targetClass.isInstance( result ) ) {
       return body
     }
 

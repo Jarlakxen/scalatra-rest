@@ -30,6 +30,8 @@ class JsonViewSupportSpec extends MutableScalatraSpec {
       "creationDate" onlyIf { implicit params => isLogged }
     }
 
+    override val targetClass = classOf[Post]
+
     implicit protected override def user( implicit request : HttpServletRequest ) = fromSession( "1" )
     protected val scentryConfig = ( new ScentryConfig {} ).asInstanceOf[ScentryConfiguration]
     protected def fromSession = {
