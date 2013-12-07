@@ -155,6 +155,8 @@ Example:
           "password" onlyIf { implicit params => user.id == target.id }
         }
 
+        override val targetClass = classOf[Post]
+
         get("/"){
             contentType = formats( "json" )
             List(User("1", "Test", "123456789", false))
