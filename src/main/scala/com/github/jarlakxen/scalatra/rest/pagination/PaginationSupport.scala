@@ -41,7 +41,7 @@ trait PaginationSupport[T] {
     } yield result
   }
 
-  def totalAmount_=( value : Int ) {
+  def totalAmount_=( value : Long ) {
     response.addHeader( "total_amount", value.toString )
   }
 
