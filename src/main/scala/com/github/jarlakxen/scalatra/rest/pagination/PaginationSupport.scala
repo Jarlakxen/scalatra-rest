@@ -16,7 +16,7 @@ trait PaginationSupport[T] {
     case _ => None
   }
 
-  implicit def sortBy : Map[String, Any] = params.get( "sortBy" ) match {
+  implicit def sortBy : Map[String, Int] = params.get( "sortBy" ) match {
     case Some( value ) => ( for ( p <- value.split( "," ) ) yield {
       if ( p.startsWith( "-" ) ) ( p.substring( 1 ), -1 )
       else ( p, 1 )
