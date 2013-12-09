@@ -24,6 +24,8 @@ trait PaginationSupport[T] {
     case _ => Map()
   }
 
+  implicit def pagination = Pagination( offset, limit, sortBy )
+
   def paginate( resultFunction : => Traversable[T], totalAmountFunction : => Long )( implicit ctx : ExecutionContext ) : Future[Traversable[T]] = {
     val _response = response
     val futureResult = Future{ resultFunction }
@@ -44,3 +46,5 @@ trait PaginationSupport[T] {
   }
 
 }
+
+case class Pagination( offset : Option[Int], limit : Option[Int], sortBy : Map[String, Int] )
