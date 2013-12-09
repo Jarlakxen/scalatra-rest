@@ -6,12 +6,13 @@ scalatra-rest its a simple library with useful tools for develop rest apis with 
 
 Stable [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com/github/jarlakxen/)
 
-    "com.github.jarlakxen" %% "scalatra-rest" % "1.2"
+    "com.github.jarlakxen" %% "scalatra-rest" % "1.4"
 
 ### Changelog
 
 1.4
 - Fix type checking
+- Improve pagination trait
 
 1.3
 - Fix build dependancies

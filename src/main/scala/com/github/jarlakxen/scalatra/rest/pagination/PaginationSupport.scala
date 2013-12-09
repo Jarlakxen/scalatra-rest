@@ -6,17 +6,17 @@ import scala.concurrent._
 trait PaginationSupport[T] {
   self : ScalatraBase =>
 
-  def offset = params.get( "page" ) match {
+  implicit def offset : Option[Int] = params.get( "page" ) match {
     case Some( value ) => Some( value.toInt * limit.get )
     case _ => None
   }
 
-  def limit = params.get( "pageSize" ) match {
+  implicit def limit : Option[Int] = params.get( "pageSize" ) match {
     case Some( value ) => Some( value.toInt )
     case _ => None
   }
 
-  def sortBy : Map[String, Any] = params.get( "sortBy" ) match {
+  implicit def sortBy : Map[String, Any] = params.get( "sortBy" ) match {
     case Some( value ) => ( for ( p <- value.split( "," ) ) yield {
       if ( p.startsWith( "-" ) ) ( p.substring( 1 ), -1 )
       else ( p, 1 )
