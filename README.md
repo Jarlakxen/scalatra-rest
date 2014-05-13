@@ -30,6 +30,45 @@ Stable [OSS Sonatype](https://oss.sonatype.org/content/repositories/releases/com
 - Add CacheControlSupport trait
 - Add JsonViewSupport trait
 
+
+## PaginationSupport
+
+This trait provide useful methods for handling pagination requests. 
+
+Example:
+
+
+    class UserServlet extends ScalatraServlet with PaginationSupport {
+
+        ...
+
+        get("/"){
+            var page = pagination
+            ...
+        }
+
+        ...
+
+    }
+
+The method pagination returns a class with this format: `Pagination( offset : Option[Int], limit : Option[Int], sortBy : Map[String, Int] )`. The sorting order value can be 1 or -1.
+
+The trait provide another method:
+
+    class UserServlet extends ScalatraServlet with PaginationSupport {
+
+        ...
+
+        get("/"){
+            paginate(List(1,2,3,4), 20)
+        }
+
+        ...
+
+    }
+
+The method paginate ( `def paginate( resultFunction : => Traversable[T], totalAmountFunction : => Long )` ) recive de list of values of the requested page and the total number of values. This total number of values is setted in a header in the response with the name "total_amount". You can manual set this header using the method `def totalAmount_=( value : Long )`
+
 ## QueryableSupport
 
 This is a simple trait that adds the capability to extract and convert the query parameters based on every case class fields.
